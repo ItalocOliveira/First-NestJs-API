@@ -1,14 +1,17 @@
 version: '3.8'
 services:
-  dev-db:
+  postgres:
     image: postgres:13
-    ports:
-    - 5434:5432
+    container_name: nestjs_api_db
+    restart: always
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: root
       POSTGRES_DB: nest
-    networks:
-      - freecodecamp
-networks:
-  freecodecamp: 
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:
