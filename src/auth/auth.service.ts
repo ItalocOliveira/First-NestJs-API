@@ -26,9 +26,7 @@ export class AuthService{
         }   catch(error) {
             if(error instanceof PrismaClientKnownRequestError) {
                 if (error.code === 'P2002') {
-                    throw new ForbiddenException(
-                        'Credentials taken',
-                    );
+                    throw new ForbiddenException('Credentials taken');
                 }
             }
             throw error;
@@ -42,17 +40,19 @@ export class AuthService{
             where: {
                 email: dto.email,
             }
-        })
+        });
         // if user doesnt exist, throw exception
-        
+        if(!user){
+            throw new ForbiddenException('Credentials incorrect');
+        }
         // compare password
-
+        const passwordMatches = await argon.verify(user.hash, dto.password);
         // if password incorrect, throw exception
-
+        if (!passwordMatches){
+            throw new ForbiddenException('Credentials incorrect');
+        }
         // send back user
-
-        
-
-        return {msg: "signin"}
+        delete user.hash;
+        return user;
     };
 }
