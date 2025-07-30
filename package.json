@@ -6,6 +6,11 @@
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
+    "prisma:dev:deploy": "prisma migrate deploy",
+    "db:dev:rm": "docker compose rm dev-db -s -f -v",
+    "db:dev:up": "docker compose up dev-db -d",
+    "db:wait": "wait-on tcp:5432 -t 10000",
+    "db:dev:restart": "npm run db:dev:rm && npm run db:dev:up && npm run db:wait && npm run prisma:dev:deploy",
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
@@ -53,7 +58,8 @@
     "ts-loader": "^9.4.3",
     "ts-node": "^10.9.1",
     "tsconfig-paths": "^4.2.0",
-    "typescript": "^5.1.3"
+    "typescript": "^5.1.3",
+    "wait-on": "^8.0.4"
   },
   "jest": {
     "moduleFileExtensions": [

@@ -1,6 +1,5 @@
-version: '3.8'
 services:
-  postgres:
+  dev-db:
     image: postgres:13
     container_name: nestjs_api_db
     restart: always

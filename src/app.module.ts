@@ -3,19 +3,17 @@ import { AuthModule } from './auth/auth.module';
 import { UserModule } from './user/user.module';
 import { BookmarkModule } from './bookmark/bookmark.module';
 import { PrismaModule } from './prisma/prisma.module';
-import { ConfigModule } from '@nestjs/config'; // <-- 1. IMPORTE O CONFIG MODULE
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
-    // 2. ADICIONE O CONFIG MODULE COMO PRIMEIRO ITEM
     ConfigModule.forRoot({
       isGlobal: true,
     }),
+    PrismaModule,
     AuthModule,
     UserModule,
     BookmarkModule,
-    PrismaModule,
   ],
-  // 3. REMOVA O CONTROLLER E PROVIDER DAQUI
 })
 export class AppModule {}
