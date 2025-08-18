@@ -9,7 +9,7 @@ describe('App e2e', () => {
       imports: [AppModule],
     }).compile();
 
-    const app = moduleRef.createNestApplication();
+    app = moduleRef.createNestApplication();
     app.useGlobalPipes(new ValidationPipe({
         whitelist: true,
       }));
@@ -17,7 +17,7 @@ describe('App e2e', () => {
   });
 
   afterAll(() => {
-    app.close();
+    app.close()
   });
   it.todo('should pass');
 });

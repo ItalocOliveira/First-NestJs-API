@@ -11,6 +11,13 @@
     "db:dev:up": "docker compose up dev-db -d",
     "db:wait": "wait-on tcp:5432 -t 10000",
     "db:dev:restart": "npm run db:dev:rm && npm run db:dev:up && npm run db:wait && npm run prisma:dev:deploy",
+    
+    "prisma:test:deploy": "prisma migrate deploy",
+    "db:test:rm": "docker compose rm dev-db -s -f -v",
+    "db:test:up": "docker compose up dev-db -d",
+    "db:wait": "wait-on tcp:5433 -t 10000",
+    "db:test:restart": "npm run db:dev:rm && npm run db:dev:up && npm run db:wait && npm run prisma:dev:deploy",
+    
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
