@@ -6,18 +6,19 @@
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
+    
     "prisma:dev:deploy": "prisma migrate deploy",
     "db:dev:rm": "docker compose rm dev-db -s -f -v",
     "db:dev:up": "docker compose up dev-db -d",
-    "db:wait": "wait-on tcp:5432 -t 10000",
-    "db:dev:restart": "npm run db:dev:rm && npm run db:dev:up && npm run db:wait && npm run prisma:dev:deploy",
-    
-    "prisma:test:deploy": "prisma migrate deploy",
-    "db:test:rm": "docker compose rm dev-db -s -f -v",
-    "db:test:up": "docker compose up dev-db -d",
-    "db:wait": "wait-on tcp:5433 -t 10000",
-    "db:test:restart": "npm run db:dev:rm && npm run db:dev:up && npm run db:wait && npm run prisma:dev:deploy",
-    
+    "db:dev:wait": "wait-on tcp:5432 -t 10000",
+    "db:dev:restart": "npm run db:dev:rm && npm run db:dev:up && npm run db:dev:wait && npm run prisma:dev:deploy",
+
+    "prisma:test:deploy": "dotenv -e .env.test -- prisma migrate deploy",
+    "db:test:rm": "docker compose rm test-db -s -f -v",
+    "db:test:up": "docker compose up test-db -d",
+    "db:test:wait": "wait-on tcp:5433 -t 10000",
+    "db:test:restart": "npm run db:dev:rm && npm run db:dev:up && npm run db:test:wait && npm run prisma:dev:deploy",
+
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
@@ -29,7 +30,8 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --watch --no-cache --config ./test/jest-e2e.json"
+
+    "test:e2e": "dotenv -e .env.test -- npm run db:test:restart && jest --watch --no-cache --config ./test/jest-e2e.json"
   },
   "dependencies": {
     "@nestjs/common": "^11.0.0",
@@ -58,6 +60,7 @@
     "@types/supertest": "^6.0.0",
     "@typescript-eslint/eslint-plugin": "^8.0.0",
     "@typescript-eslint/parser": "^8.0.0",
+    "dotenv-cli": "^10.0.0",
     "eslint": "^9.0.0",
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-prettier": "^5.0.0",
