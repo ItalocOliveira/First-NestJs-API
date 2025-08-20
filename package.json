@@ -17,7 +17,7 @@
     "db:test:rm": "docker compose rm test-db -s -f -v",
     "db:test:up": "docker compose up test-db -d",
     "db:test:wait": "wait-on tcp:5433 -t 10000",
-    "db:test:restart": "npm run db:dev:rm && npm run db:dev:up && npm run db:test:wait && npm run prisma:dev:deploy",
+    "db:test:restart": "npm run db:test:rm && npm run db:test:up && npm run db:test:wait && npm run prisma:test:deploy",
 
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
