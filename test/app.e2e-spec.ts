@@ -160,7 +160,8 @@ describe('App e2e', () => {
             .withHeaders({ 
               Authorization: 'Bearer $S{userAt}'
             })
-            .expectStatus(200);
+            .expectStatus(200)
+            .stores('userId', 'id');;
         });
       });
 
@@ -178,6 +179,19 @@ describe('App e2e', () => {
             })
             .withBody(dto)
             .expectStatus(200);
+        });
+      });
+      
+      describe('Delete user', () => {
+        it('should delete user', () => {
+          return pactum
+            .spec()
+            .delete('/users/$S{userId}')
+            .withHeaders({ 
+              Authorization: 'Bearer $S{userAt}'
+            })
+            .withBody(dto)
+            .expectStatus(204);
         });
       });
     });
