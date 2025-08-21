@@ -12,5 +12,18 @@ services:
     volumes:
       - pgdata:/var/lib/postgresql/data
 
+  test-db:
+    image: postgres:13
+    container_name: nestjs_api_db_test # Unique container name
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: root
+      POSTGRES_DB: nest
+    ports:
+      - "5433:5432" # Correct port mapping: host:container
+    volumes:
+      - pgdata_test:/var/lib/postgresql/data # Unique volume
 volumes:
   pgdata:
+  pgdata_test:
